@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="mess">
+    <button onclick="myFunction()">Generate Name</button>
+    <div id="printableArea">
+        {% for name in names %}
+        {{name}} <br>
+        {% endfor %}
+    </div>
+  
+
+    <script>
+
+        function myFunction() {
+        
+            var ws = new WebSocket("ws://127.0.0.1:8000/ws/test/" );
+         ws.onopen = function (event) {
+        a=document.getElementById("mess").value
+           ws.send(String(a));
+        }
+        ws.onmessage = function(e){
+        var server_message = e.data;
+        document.getElementById("printableArea").innerHTML+=`<div>${server_message}</div><br />`;
+        console.log(server_message);
+        }
+    
+         }
+    
+         
+    </script>
+</body>
+</html>
